@@ -1,11 +1,12 @@
+import Input.Process;
+import Input.ProcessInput;
+import Output.ScheduleOutput;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.LinkedList;
+import schedule.FCFS;
+import schedule.Scheduler;
 
 
 public class Main {
@@ -16,13 +17,18 @@ public class Main {
 
 	}
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) {
 		configLOG(LOG);
-		LinkedList<String[]> process_list = new Input().read_input();
+		ProcessInput input = new ProcessInput();
 		LOG.info("printing input ----");
-		for (String[] process : process_list) {
-			LOG.info(Arrays.toString(process));
+		for (Process process : input.process_list) {
+			LOG.info(process.toString());
 		}
-	}
 
+		LOG.info("simulating FCFS ----");
+		Scheduler scheduler = new FCFS(input);
+		ScheduleOutput output = new ScheduleOutput(scheduler);
+		LOG.info("printing output ---- (current time, process id)");
+		output.write_output("FCFS.txt");
+	}
 }

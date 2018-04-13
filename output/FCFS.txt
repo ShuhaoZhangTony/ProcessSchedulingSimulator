@@ -1,0 +1,4 @@
+printing output ---- (current time, process id)
+(0,0)
+(4,1)
+average waiting time:1
