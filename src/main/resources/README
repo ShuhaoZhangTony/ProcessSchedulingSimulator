@@ -1,0 +1,7 @@
+The file contains several lines, each line represent 1 process with 3 integer values:
+process_id arriving_time burst_time
+
+1 0 2
+means: the process with id = 1 arrives at the scheduler at time t = 0, will complete after 2 time units (ms)
+
+The file input.txt will list all process in the increasing order of their arriving time. Assume only one process arrive at a time slice (if process 0 arrives at time 0, process 1 must arrive at time > 0 (any number > 1).
