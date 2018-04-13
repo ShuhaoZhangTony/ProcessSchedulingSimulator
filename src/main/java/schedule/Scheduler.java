@@ -1,9 +1,12 @@
 package schedule;
 
-public interface Scheduler {
+public abstract class Scheduler {
 	public Schedule schedule = new Schedule();
+	int average_waiting_time = 0;
+	int current_time = 0;
+	int waiting_time = 0;
 
-	int getAverage_waiting_time();
+	public abstract int getAverage_waiting_time();
 
-	void output();
+	abstract void output();
 }

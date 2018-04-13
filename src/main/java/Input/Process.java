@@ -3,28 +3,42 @@ package Input;
 public class Process {
 
 
-	final String[] record;
+	int id;
+	int arrive_time;
+	int burst_time;
 
 	public Process(String[] record) {
-		this.record = record;
+		id = Integer.parseInt(record[0]);
+		arrive_time = Integer.parseInt(record[1]);
+		burst_time = Integer.parseInt(record[2]);
+
 	}
 
 	public int id() {
-		return Integer.parseInt(record[0]);
+		return id;
 	}
 
 	public int arrive_time() {
-		return Integer.parseInt(record[1]);
+		return arrive_time;
 	}
 
 
 	public int burst_time() {
-		return Integer.parseInt(record[2]);
+		return burst_time;
+	}
+
+	/**
+	 *
+	 * @param quantum
+	 * @return whether this process has finished computation.
+	 */
+	public boolean setBurst_time(int quantum) {
+		return (burst_time -= quantum) <= 0;
 	}
 
 	public String toString() {
 
-		return "id:"+id()+"\t:arrive_time:"+arrive_time()+"\tburst_time:"+ burst_time();
+		return "id:" + id() + "\t:arrive_time:" + arrive_time() + "\tburst_time:" + burst_time();
 
 	}
 }

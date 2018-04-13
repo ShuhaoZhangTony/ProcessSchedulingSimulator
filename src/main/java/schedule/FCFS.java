@@ -6,11 +6,9 @@ import Input.ProcessInput;
 /**
  * First come first service
  */
-public class FCFS implements Scheduler  {
+public class FCFS extends Scheduler  {
 
-	int average_waiting_time = 0;
-	int current_time = 0;
-	int waiting_time = 0;
+
 
 	public FCFS(ProcessInput input) {
 		for (Process process : input.process_list) {
