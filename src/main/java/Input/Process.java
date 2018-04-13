@@ -8,6 +8,11 @@ public class Process {
 	final int burst_time;
 	int remaining_time;
 
+
+
+
+	private int iteration=0;
+
 	public Process(String[] record) {
 		id = Integer.parseInt(record[0]);
 		arrive_time = Integer.parseInt(record[1]);
@@ -52,6 +57,7 @@ public class Process {
 
 	public void finish() {
 		remaining_time = 0;
+
 	}
 
 	public boolean finished() {

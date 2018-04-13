@@ -50,18 +50,26 @@ public class Main {
 //		LOG.info("printing output ---- (current time, process id)");
 //		output.write_output("FCFS.txt");
 
-		input = new ProcessInput("input.txt");
-		LOG.info("simulating RR ----");
-		scheduler = new RR( input, 1);
-		output = new ScheduleOutput(scheduler);
-		LOG.info("printing output ---- (current time, process id)");
-		output.write_output("RR.txt");
+//		input = new ProcessInput("input.txt");
+//		LOG.info("simulating RR ----");
+//		scheduler = new RR( input, 1);
+//		output = new ScheduleOutput(scheduler);
+//		LOG.info("printing output ---- (current time, process id)");
+//		output.write_output("RR.txt");
+
+//		input = new ProcessInput("input.txt");
+//		LOG.info("simulating SRTF ----");
+//		scheduler = new SRTF(input);
+//		output = new ScheduleOutput(scheduler);
+//		LOG.info("printing output ---- (current time, process id)");
+//		output.write_output("SRTF.txt");
 
 		input = new ProcessInput("input.txt");
-		LOG.info("simulating SRTF ----");
-		scheduler = new SRTF(input);
+		LOG.info("simulating SJF ----");
+		scheduler = new SJF(input);
 		output = new ScheduleOutput(scheduler);
 		LOG.info("printing output ---- (current time, process id)");
-		output.write_output("SRTF.txt");
+		output.write_output("SJF.txt");
+
 	}
 }

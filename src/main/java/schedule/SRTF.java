@@ -6,8 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import schedule.impl.Queue;
 
-import java.util.LinkedList;
-
 /**
  * Shortest Job First
  */
@@ -67,14 +65,8 @@ public class SRTF extends Scheduler {
 	}
 
 
-
 	private boolean arrive_in_interval(Process process, int current_time) {
 		return process.arrive_time() <= current_time && process.arrive_time() > current_time - 1;
-	}
-
-
-	public int getAverage_waiting_time() {
-		return average_waiting_time;
 	}
 
 }

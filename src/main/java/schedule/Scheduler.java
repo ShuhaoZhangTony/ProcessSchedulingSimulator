@@ -11,7 +11,9 @@ public abstract class Scheduler {
 	protected int current_time = 0;
 	protected int waiting_time = 0;
 
-	public abstract int getAverage_waiting_time();
+	public int getAverage_waiting_time() {
+		return average_waiting_time;
+	}
 
 	protected boolean all_finished_process(LinkedList<Process> process_list) {
 		for (Process process : process_list) {

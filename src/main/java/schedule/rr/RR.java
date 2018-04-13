@@ -71,8 +71,6 @@ public class RR extends Scheduler {
 	}
 
 
-	public int getAverage_waiting_time() {
-		return average_waiting_time;
-	}
+
 
 }

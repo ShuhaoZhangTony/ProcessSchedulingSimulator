@@ -21,8 +21,6 @@ public class FCFS extends Scheduler {
 		average_waiting_time = waiting_time / input.process_list.size();
 	}
 
-	public int getAverage_waiting_time() {
-		return average_waiting_time;
-	}
+
 
 }
