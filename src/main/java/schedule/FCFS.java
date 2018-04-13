@@ -6,8 +6,7 @@ import Input.ProcessInput;
 /**
  * First come first service
  */
-public class FCFS extends Scheduler  {
-
+public class FCFS extends Scheduler {
 
 
 	public FCFS(ProcessInput input) {
@@ -15,18 +14,15 @@ public class FCFS extends Scheduler  {
 			if (current_time < process.arrive_time()) {
 				current_time = process.arrive_time();
 			}
-			schedule.add(current_time , process.id());
-			waiting_time += (current_time - process.arrive_time());
+			schedule.add(current_time, process.id());
 			current_time += process.burst_time();
+			waiting_time += (current_time - process.arrive_time() - process.burst_time());
 		}
 		average_waiting_time = waiting_time / input.process_list.size();
 	}
 
-	public int getAverage_waiting_time(){
+	public int getAverage_waiting_time() {
 		return average_waiting_time;
 	}
 
-	public void output() {
-
-	}
 }

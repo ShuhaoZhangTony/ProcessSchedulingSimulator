@@ -2,7 +2,7 @@ package Output;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import schedule.Record;
+import schedule.impl.Record;
 import schedule.Scheduler;
 
 import java.io.BufferedWriter;
