@@ -7,15 +7,15 @@ import org.slf4j.LoggerFactory;
 import schedule.impl.Queue;
 
 /**
- * Shortest Job First
+ * Shortest remaining task first.
  */
 public class SRTF extends Scheduler {
 	private static final Logger LOG = LoggerFactory.getLogger(SRTF.class);
 	private final Queue<Process> q = new Queue();
+	Process current_process = null;
 
 	public SRTF(ProcessInput input) {
 
-		Process current_process = null;
 		do {
 			boolean new_process = false;
 			//update the queue during the last interval.
@@ -35,31 +35,56 @@ public class SRTF extends Scheduler {
 				}
 			}
 
-			//schedule
-			if (new_process) {
-				Process pre_process = current_process;
-				current_process = q.SJ();//pick the shortest job.
-				if (pre_process != current_process) {
-					schedule.add(current_time, current_process.id());
+//			//schedule
+//			if (new_process) {
+//				Process process = q.SRJ();//pick the shortest job.
+//				if (current_process != process) {
+//					current_process = process;
+//					schedule.add(current_time, current_process.id());
+//				}
+//			} else if (current_process == null && !q.isEmpty()) {
+//				current_process = q.SRJ();//pick the shortest job.
+//				schedule.add(current_time, current_process.id());
+//			}
+//
+//
+//			if (current_process != null) {
+//				final int remaining = current_process.progress(1);
+//				current_time += 1;//advance time by 1 time slice.
+//				if (remaining == 0) {
+//					waiting_time += (current_time - current_process.arrive_time() - current_process.burst_time());
+//					q.remove(current_process);
+//					current_process = null;
+//				}
+//			} else {
+//				current_time += 1;//advance time by 1 time slice.
+//			}
+			if (q.size() > 0) {
+				//schedule the queue
+				final Process process = q.SRJ();
+				if (current_process != null) {
+					if (current_process != process) {
+						current_process = process;
+						schedule.add(current_time, process.id());
+					}
+				} else {
+					current_process = process;
+					schedule.add(current_time, process.id());
 				}
-			} else if (current_process == null && !q.isEmpty()) {
-				current_process = q.SJ();//pick the shortest job.
-				schedule.add(current_time, current_process.id());
-			}
 
-
-			if (current_process != null) {
-				final int remaining = current_process.progress(1);
-				current_time += 1;//advance time by 1 time slice.
+				final int remaining = process.progress(1);
 				if (remaining == 0) {
-					waiting_time += (current_time - current_process.arrive_time() - current_process.burst_time());
-					q.remove(current_process);
-					current_process = null;
+					current_time += 1;
+					process.finish();
+					//clean the queue
+					waiting_time += (current_time - process.arrive_time() - process.burst_time());
+				} else {
+					current_time += 1;
+					q.addLast(process);//haven't finish computing, add to the end of the queue.
 				}
 			} else {
-				current_time += 1;//advance time by 1 time slice.
+				current_time += 1;//advance the timeslice to wait for next process
 			}
-
 		} while (true);
 		average_waiting_time = waiting_time / input.process_list.size();
 	}

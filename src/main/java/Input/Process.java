@@ -6,6 +6,11 @@ public class Process {
 	int id;
 	int arrive_time;
 	final int burst_time;
+
+	public int getRemaining_time() {
+		return remaining_time;
+	}
+
 	int remaining_time;
 
 

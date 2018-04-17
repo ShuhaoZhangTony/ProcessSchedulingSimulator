@@ -5,11 +5,9 @@ import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import schedule.FCFS;
-import schedule.SJF;
 import schedule.SRTF;
 import schedule.Scheduler;
-import schedule.rr.RR;
+import schedule.RR;
 
 
 public class Main {
@@ -35,7 +33,7 @@ public class Main {
 		 */
 
 
-		ProcessInput input = new ProcessInput("input.txt");
+		ProcessInput input = new ProcessInput("testinput.txt");
 		LOG.info("printing input ----");
 		for (Process process : input.process_list) {
 			LOG.info(process.toString());
@@ -43,33 +41,33 @@ public class Main {
 		Scheduler scheduler;
 		ScheduleOutput output;
 
-		input = new ProcessInput("input.txt");
+//		input = new ProcessInput("input.txt");
 //		LOG.info("simulating FCFS ----");
 //		scheduler = new FCFS(input);
 //		output = new ScheduleOutput(scheduler);
 //		LOG.info("printing output ---- (current time, process id)");
 //		output.write_output("FCFS.txt");
 
-//		input = new ProcessInput("input.txt");
+//		input = new ProcessInput("testinput.txt");
 //		LOG.info("simulating RR ----");
-//		scheduler = new RR( input, 1);
+//		scheduler = new RR(input, 1);
 //		output = new ScheduleOutput(scheduler);
 //		LOG.info("printing output ---- (current time, process id)");
 //		output.write_output("RR.txt");
 
-//		input = new ProcessInput("input.txt");
-//		LOG.info("simulating SRTF ----");
-//		scheduler = new SRTF(input);
-//		output = new ScheduleOutput(scheduler);
-//		LOG.info("printing output ---- (current time, process id)");
-//		output.write_output("SRTF.txt");
-
-		input = new ProcessInput("input.txt");
-		LOG.info("simulating SJF ----");
-		scheduler = new SJF(input);
+		input = new ProcessInput("testinput.txt");
+		LOG.info("simulating SRTF ----");
+		scheduler = new SRTF(input);
 		output = new ScheduleOutput(scheduler);
 		LOG.info("printing output ---- (current time, process id)");
-		output.write_output("SJF.txt");
+		output.write_output("SRTF.txt");
+
+//		input = new ProcessInput("input.txt");
+//		LOG.info("simulating SJF ----");
+//		scheduler = new SJF(input);
+//		output = new ScheduleOutput(scheduler);
+//		LOG.info("printing output ---- (current time, process id)");
+//		output.write_output("SJF.txt");
 
 	}
 }

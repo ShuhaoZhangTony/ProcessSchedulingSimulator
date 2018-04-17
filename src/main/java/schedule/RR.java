@@ -1,10 +1,9 @@
-package schedule.rr;
+package schedule;
 
 import Input.Process;
 import Input.ProcessInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import schedule.Scheduler;
 
 import java.util.LinkedList;
 
@@ -16,6 +15,7 @@ public class RR extends Scheduler {
 	private final int quantum;
 	private final LinkedList<Process> q = new LinkedList();
 	private int last_slice = 1;
+	private Process current_process;
 
 	public RR(ProcessInput input, int quantum) {
 		this.quantum = quantum;
@@ -41,9 +41,17 @@ public class RR extends Scheduler {
 			if (q.size() > 0) {
 				//schedule the queue
 				final Process process = q.removeFirst();
-				schedule.add(current_time, process.id());
-				final int remaining = process.progress(quantum);
+				if (current_process != null) {
+					if (current_process != process) {
+						current_process = process;
+						schedule.add(current_time, process.id());
+					}
+				} else {
+					current_process = process;
+					schedule.add(current_time, process.id());
+				}
 
+				final int remaining = process.progress(quantum);
 				if (remaining <= 0) {
 					LOG.debug("Process finishes early than its assigned quantum expire");
 					last_slice = quantum + remaining;
@@ -69,8 +77,4 @@ public class RR extends Scheduler {
 //		return process.arrive_time() >= current_time && process.arrive_time() < current_time + quantum;
 		return process.arrive_time() <= current_time && process.arrive_time() > current_time - timeslice;
 	}
-
-
-
-
 }
