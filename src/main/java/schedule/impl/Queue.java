@@ -22,14 +22,13 @@ public class Queue<E extends Process> extends LinkedList<E> {
 
 	public Process ESJ(Estimator estimator) {
 		Process SJ = new Process();
-		estimator.update_burst(SJ.id(), Integer.MAX_VALUE);
-
 		for (Process e : this) {
-			final int i = estimator.estimate_burst(e.id());
-			if (i < estimator.estimate_burst(SJ.id())) {
+			final int i = estimator.estimate_burst(e);
+			if (i < estimator.estimate_burst(SJ)) {
 				SJ = e;
 			}
 		}
+		remove(SJ);
 		return SJ;
 	}
 

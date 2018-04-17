@@ -35,30 +35,7 @@ public class SRTF extends Scheduler {
 				}
 			}
 
-//			//schedule
-//			if (new_process) {
-//				Process process = q.SRJ();//pick the shortest job.
-//				if (current_process != process) {
-//					current_process = process;
-//					schedule.add(current_time, current_process.id());
-//				}
-//			} else if (current_process == null && !q.isEmpty()) {
-//				current_process = q.SRJ();//pick the shortest job.
-//				schedule.add(current_time, current_process.id());
-//			}
-//
-//
-//			if (current_process != null) {
-//				final int remaining = current_process.progress(1);
-//				current_time += 1;//advance time by 1 time slice.
-//				if (remaining == 0) {
-//					waiting_time += (current_time - current_process.arrive_time() - current_process.burst_time());
-//					q.remove(current_process);
-//					current_process = null;
-//				}
-//			} else {
-//				current_time += 1;//advance time by 1 time slice.
-//			}
+			//schedule
 			if (q.size() > 0) {
 				//schedule the queue
 				final Process process = q.SRJ();
@@ -71,7 +48,6 @@ public class SRTF extends Scheduler {
 					current_process = process;
 					schedule.add(current_time, process.id());
 				}
-
 				final int remaining = process.progress(1);
 				if (remaining == 0) {
 					current_time += 1;

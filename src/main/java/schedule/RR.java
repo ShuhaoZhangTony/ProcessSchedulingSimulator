@@ -4,21 +4,18 @@ import Input.Process;
 import Input.ProcessInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.LinkedList;
+import schedule.impl.Queue;
 
 /**
  * First come first service
  */
 public class RR extends Scheduler {
 	private static final Logger LOG = LoggerFactory.getLogger(RR.class);
-	private final int quantum;
-	private final LinkedList<Process> q = new LinkedList();
+	private final Queue<Process> q = new Queue();
 	private int last_slice = 1;
 	private Process current_process;
 
 	public RR(ProcessInput input, int quantum) {
-		this.quantum = quantum;
 		do {
 			boolean new_process = false;
 			//update the queue during the last quantum.
@@ -33,7 +30,7 @@ public class RR extends Scheduler {
 			//terminate case
 			if (!new_process && q.size() == 0) {
 				if (all_finished_process(input.process_list)) {
-					LOG.debug("RR finished scheduling for all process!");
+					LOG.trace("RR finished scheduling for all process!");
 					break;
 				}
 			}
@@ -53,7 +50,7 @@ public class RR extends Scheduler {
 
 				final int remaining = process.progress(quantum);
 				if (remaining <= 0) {
-					LOG.debug("Process finishes early than its assigned quantum expire");
+					LOG.trace("Process finishes early than its assigned quantum expire");
 					last_slice = quantum + remaining;
 					current_time += last_slice;
 					process.finish();

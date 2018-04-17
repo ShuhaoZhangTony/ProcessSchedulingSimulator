@@ -15,8 +15,8 @@ public class SJF extends Scheduler {
 	private int last_interval = 1;//allow the first task to be added.
 	private final Queue<Process> q = new Queue();
 
-	public SJF(ProcessInput input) {
-		Estimator estimator = new Estimator();
+	public SJF(ProcessInput input, double i) {
+		Estimator estimator = new Estimator(i);
 		do {
 			boolean new_process = false;
 			//update the queue during the last interval.
@@ -31,27 +31,19 @@ public class SJF extends Scheduler {
 			//terminate case
 			if (!new_process && q.size() == 0) {
 				if (all_finished_process(input.process_list)) {
-					LOG.debug("SJF finished scheduling for all process!");
+					LOG.trace("SJF finished scheduling for all process!");
 					break;
 				}
 			}
 
-			if (!q.isEmpty()) {
+			if (q.size() > 0) {
 				//schedule the queue
-				final Process process = q.ESJ(estimator);//pick the estimated shortest job.
-
+				final Process process = q.ESJ(estimator);//pick the estimated shortest job. replace with q.SRJ() as perfect estimator
 				schedule.add(current_time, process.id());
-
 				waiting_time += (current_time - process.arrive_time());
-
 				last_interval = process.burst_time();
-
 				process.finish();//do the work.
-
-				q.remove(process);
-
 				estimator.update_burst(process.id(), process.burst_time());
-
 			} else {
 				last_interval = 1;//advance time by 1 time slice.
 			}

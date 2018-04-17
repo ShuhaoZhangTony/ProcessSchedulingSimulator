@@ -3,20 +3,31 @@ package Input;
 public class Process {
 
 
-	int id;
-	int arrive_time;
+	final int id;
+	final int arrive_time;
 	final int burst_time;
+	int remaining_time;
+
+	public Process(int id, int arrive_time, int burst_time) {
+		this.id = id;
+		this.arrive_time = arrive_time;
+		this.burst_time = burst_time;
+		this.remaining_time = burst_time;
+	}
+
+	public Process(Process process) {
+		this.id = process.id;
+		this.arrive_time = process.arrive_time;
+		this.burst_time = process.burst_time;
+		this.remaining_time = this.burst_time;
+	}
 
 	public int getRemaining_time() {
 		return remaining_time;
 	}
 
-	int remaining_time;
 
-
-
-
-	private int iteration=0;
+	private int iteration = 0;
 
 	public Process(String[] record) {
 		id = Integer.parseInt(record[0]);
