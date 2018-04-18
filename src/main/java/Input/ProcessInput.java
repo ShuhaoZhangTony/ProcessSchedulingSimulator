@@ -31,7 +31,7 @@ public class ProcessInput {
 	}
 
 	public ProcessInput all_short_process() {
-		int entry = 20;//100 entries
+		int entry = 50;//number entries in the input process list
 		Random r = new Random();
 		int current_time = 0;
 		process_list.add(new Process(0, 0, 1));
@@ -47,7 +47,7 @@ public class ProcessInput {
 	}
 
 	public ProcessInput interleave_process() {
-		int entry = 20;//100 entries
+		int entry = 20;//number entries in the input process list
 		Random r = new Random();
 		int current_time = 0;
 		process_list.add(new Process(0, 0, 1));

@@ -31,58 +31,85 @@ public class Main {
 		 */
 
 
-//		ProcessInput input = new ProcessInput("input.txt");
-
-		ProcessInput input = new ProcessInput().interleave_process();
+		ProcessInput input = new ProcessInput("input.txt");
 
 
-		LOG.info("printing input ----");
-		for (Process process : input.process_list) {
-			LOG.info(process.toString());
-		}
-		Scheduler scheduler = null;
-		ScheduleOutput output;
+		double fcfs_ratio = 0;
+		double rr_ratio = 0;
+		double sjf_ratio = 0;
+		int repeat;
+		for (repeat = 0; repeat < 1; repeat++) {
+//			ProcessInput input = new ProcessInput().interleave_process();
 
-//		input = new ProcessInput("input.txt");
-		ProcessInput FCFS_input = new ProcessInput(input);
-		LOG.info("simulating FCFS ----");
-		scheduler = new FCFS(FCFS_input);
-		output = new ScheduleOutput(scheduler);
-		LOG.info("printing output ---- (current time, process id)");
-		output.write_output("FCFS.txt");
+//			LOG.info("printing input ----");
+//			for (Process process : input.process_list) {
+//				LOG.info(process.toString());
+//			}
+			Scheduler scheduler = null;
+			ScheduleOutput output;
 
 
-		LOG.info("simulating RR ----");
-		for (int i = 1; i < 100; i += 2) {
-			ProcessInput RR_input = new ProcessInput(input);
-			scheduler = new RR(RR_input, i);
+			ProcessInput SRTF_input = new ProcessInput(input);
+			final int waiting_time_SRTF;
+//			LOG.info("simulating SRTF ----");
+			scheduler = new SRTF(SRTF_input);
+//			output = new ScheduleOutput(scheduler);
+//		LOG.info("printing output ---- (current time, process id)");
+//		output.write_output("SRTF.txt");
+
+			waiting_time_SRTF = scheduler.getAverage_waiting_time();
+
+			ProcessInput FCFS_input = new ProcessInput(input);
+//			LOG.info("simulating FCFS ----");
+			int min_waiting_FCFS;
+			scheduler = new FCFS(FCFS_input);
+			min_waiting_FCFS = scheduler.getAverage_waiting_time();
+//		output = new ScheduleOutput(scheduler);
+//		LOG.info("printing output ---- (current time, process id)");
+//		output.write_output("FCFS.txt");
+
+
+//			LOG.info("simulating RR ----");
+			int min_waiting_RR = Integer.MAX_VALUE;
+			for (int i = 1; i < 100; i += 2) {
+				ProcessInput RR_input = new ProcessInput(input);
+				scheduler = new RR(RR_input, i);
 //			output = new ScheduleOutput(scheduler);
 //			LOG.info("printing output ---- (current time, process id)");
 //			output.write_output("RR.txt");
-			final int average_waiting_time = scheduler.getAverage_waiting_time();
-			LOG.info("quantum:\t" + i + "\t average waiting time:\t" + average_waiting_time);
-		}
-		output = new ScheduleOutput(scheduler);
-		output.write_output("RR.txt");
-
-		input = new ProcessInput("input.txt");
-		ProcessInput SRTF_input = new ProcessInput(input);
-		LOG.info("simulating SRTF ----");
-		scheduler = new SRTF(SRTF_input);
-		output = new ScheduleOutput(scheduler);
-		LOG.info("printing output ---- (current time, process id)");
-		output.write_output("SRTF.txt");
-
-		LOG.info("simulating SJF ----");
-		for (double i = 0.1; i <= 1; i += 0.05) {
-//			input = new ProcessInput("input.txt");
-			ProcessInput SJF_input = new ProcessInput(input);
-			scheduler = new SJF(SJF_input, i);
-			final int average_waiting_time = scheduler.getAverage_waiting_time();
-			LOG.info("a:\t" + i + "\t average waiting time:\t" + average_waiting_time);
+				final int average_waiting_time = scheduler.getAverage_waiting_time();
+				if (average_waiting_time < min_waiting_RR) {
+					min_waiting_RR = average_waiting_time;
+				}
+//				LOG.info("quantum:\t" + i + "\t average waiting time:\t" + average_waiting_time);
+			}
 //			output = new ScheduleOutput(scheduler);
-//			LOG.info("printing output ---- (current time, process id)");
-//			output.write_output("SJF.txt");
+//			output.write_output("RR.txt");
+
+//			LOG.info("simulating SJF ----");
+			int min_waiting_SFJ = Integer.MAX_VALUE;
+			for (double i = 0.1; i <= 1; i += 0.05) {
+//			input = new ProcessInput("input.txt");
+				ProcessInput SJF_input = new ProcessInput(input);
+				scheduler = new SJF(SJF_input, i);
+				final int average_waiting_time = scheduler.getAverage_waiting_time();
+				if (average_waiting_time < min_waiting_SFJ) {
+					min_waiting_SFJ = average_waiting_time;
+				}
+//			LOG.info("a:\t" + i + "\t average waiting time:\t" + average_waiting_time);
+			output = new ScheduleOutput(scheduler);
+			LOG.info("printing output ---- (current time, process id)");
+			output.write_output("SJF.txt");
+			}
+			fcfs_ratio += (double) min_waiting_FCFS / waiting_time_SRTF;
+			rr_ratio += (double) min_waiting_RR / waiting_time_SRTF;
+			sjf_ratio += (double) min_waiting_SFJ / waiting_time_SRTF;
+//			LOG.info("FCFS ratio:" + (double) min_waiting_FCFS / waiting_time_SRTF);
+//			LOG.info("RR ratio:" + (double) min_waiting_RR / waiting_time_SRTF);
+//			LOG.info("SJF ratio:" + (double) min_waiting_SFJ / waiting_time_SRTF);
 		}
+//		LOG.info("FCFS ratio:" + fcfs_ratio / repeat);
+//		LOG.info("RR ratio:" + rr_ratio / repeat);
+//		LOG.info("SJF ratio:" + sjf_ratio / repeat);
 	}
 }

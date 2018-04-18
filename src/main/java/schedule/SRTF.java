@@ -30,7 +30,7 @@ public class SRTF extends Scheduler {
 			//terminate case
 			if (!new_process && q.size() == 0) {
 				if (all_finished_process(input.process_list)) {
-					LOG.debug("SRTF finished scheduling for all process!");
+//					LOG.debug("SRTF finished scheduling for all process!");
 					break;
 				}
 			}
